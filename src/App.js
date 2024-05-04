@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CoinList from './pages/CoinList';
+import CoinDetails from './pages/CoinDetails';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<CoinList />} />
+          <Route path="/:id" element={<CoinDetails />} />
         </Routes>
       </BrowserRouter>
     </>

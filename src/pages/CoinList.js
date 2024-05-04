@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatNumber } from '../utils/common';
+import { useNavigate } from 'react-router-dom';
 
 export default function CoinList() {
   const [coinList, setCoinList] = useState([]);
   const [currency, setCurrency] = useState('krw');
+
+  const navigate = useNavigate();
 
   const getCoinList = async () => {
     try {
@@ -38,7 +41,12 @@ export default function CoinList() {
         </thead>
         <tbody>
           {coinList.map((coin) => (
-            <tr key={coin.id}>
+            <tr
+              key={coin.id}
+              onClick={() => {
+                navigate(`/${coin.id}`);
+              }}
+            >
               <td>
                 {coin.name}
                 {'\n'}

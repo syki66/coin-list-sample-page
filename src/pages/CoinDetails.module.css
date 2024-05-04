@@ -1,0 +1,176 @@
+.container {
+  display: grid;
+  /* grid-template-rows: 1fr 1fr 1fr; */
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 2rem;
+}
+
+.title {
+  display: flex;
+  margin: 0;
+}
+
+.title > span {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkActive {
+  color: #ecb63f;
+  cursor: pointer;
+}
+
+.bookmarkInactive {
+  color: #c4c4c4;
+  cursor: pointer;
+}
+
+.title > img {
+  height: 2rem;
+  padding: 0rem 0.4rem;
+}
+
+.title > h1 {
+  font-size: 1.4rem;
+  margin: 0rem;
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  text-align: right;
+}
+
+.info > div {
+  display: flex;
+  flex-direction: row;
+}
+
+.info > div > div:nth-child(n) {
+  padding: 1rem;
+  border: 0.0625rem solid #d3d3d3;
+}
+
+.info > div > div:nth-child(1) {
+  background-color: #ececec;
+  font-weight: 600;
+  width: 8rem;
+}
+
+.info > div > div:nth-child(2) {
+  flex: 1;
+}
+
+.priceContainer {
+  padding: 1rem 0rem;
+}
+
+.priceContainer > div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}
+
+.priceContainer > div:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1.3rem;
+  padding-right: 1.5rem;
+}
+
+.currencyPrice,
+.coinPrice {
+  display: flex;
+}
+
+.currencyPrice > div:nth-child(1),
+.coinPrice > div:nth-child(1) {
+  flex: 1;
+  text-align: right;
+}
+
+.currencyPrice > div:nth-child(1) {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.currencyPrice > div:nth-child(2) {
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: end;
+}
+
+.coinPrice > div:nth-child(1) {
+  font-size: 0.8rem;
+  color: #9f9f9f;
+}
+
+.coinPrice > div:nth-child(2) {
+  font-size: 0.8rem;
+}
+
+.currencyPrice > div:nth-child(2),
+.coinPrice > div:nth-child(2) {
+  width: 4rem;
+  padding-left: 1rem;
+}
+
+.marketCap,
+.volume {
+  flex: 1;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.calculator {
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
+  background-color: #d3d3d3;
+  padding: 1.5rem;
+}
+
+.calculator > h2 {
+  font-size: 1rem;
+  margin: 0rem;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.inputContainer > div:nth-child(2) {
+  text-align: center;
+  width: 3rem;
+}
+
+.inputContainer > div {
+  margin: 1rem 0rem;
+}
+
+.inputContainer > div > label {
+  font-weight: 600;
+  padding: 1rem 3rem 1rem 1rem;
+  background-color: #ececec;
+  border: 0.0625rem solid darkgray;
+}
+
+.inputContainer > div > span > input {
+  background-color: transparent;
+  text-align: right;
+  border: none;
+}
+
+.inputContainer > div > span {
+  padding: 1rem;
+  text-align: right;
+  background-color: #ffffff;
+  border: 0.0625rem solid darkgray;
+}
+
+.description {
+  grid-row: 4 / 5;
+  grid-column: 1 / 3;
+}
