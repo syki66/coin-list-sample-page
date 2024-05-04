@@ -27,3 +27,15 @@ export const formatNumber = (number, currency) => {
     return currencyObject[currency] + addCommasAndDecimal(number);
   }
 };
+
+export const getPercentColor = (number) => {
+  const _number = addCommasAndDecimal(number).replace(/[%\,]/g, '');
+
+  if (_number > 0) {
+    return 'red';
+  } else if (_number < 0) {
+    return 'blue';
+  } else {
+    return 'black';
+  }
+};

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './CoinDetails.module.css';
-import { formatNumber } from '../utils/common';
+import { formatNumber, getPercentColor } from '../utils/common';
 
 export default function CoinDetails() {
   const params = useParams();
@@ -92,7 +92,15 @@ export default function CoinDetails() {
                   currency
                 )}
               </div>
-              <div>
+              <div
+                style={{
+                  color: getPercentColor(
+                    coin.market_data.price_change_percentage_24h_in_currency[
+                      currency
+                    ]
+                  ),
+                }}
+              >
                 {formatNumber(
                   coin.market_data.price_change_percentage_24h_in_currency[
                     currency
@@ -103,7 +111,13 @@ export default function CoinDetails() {
             </div>
             <div className={styles.coinPrice}>
               <div>1.00000000 {coin.symbol.toUpperCase()}</div>
-              <div>
+              <div
+                style={{
+                  color: getPercentColor(
+                    coin.market_data.price_change_percentage_24h
+                  ),
+                }}
+              >
                 {formatNumber(
                   coin.market_data.price_change_percentage_24h,
                   '%'

@@ -13,10 +13,7 @@ export default function CoinList() {
     try {
       const url = `${process.env.REACT_APP_BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=30&page=1&price_change_percentage=1h,24h,7d`;
       const response = await axios.get(url);
-      const sortedData = response.data.sort(
-        (a, b) => a.market_cap_rank - b.market_cap_rank
-      );
-      setCoinList(sortedData);
+      setCoinList(response.data);
     } catch (error) {
       console.log(error);
     }
