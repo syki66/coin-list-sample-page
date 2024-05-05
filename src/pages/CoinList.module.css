@@ -1,0 +1,52 @@
+.selectBox {
+  text-align: right;
+}
+
+.tableContainer {
+  width: 100%;
+  border-collapse: collapse;
+  font-weight: 600;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tableContainer th {
+  text-align: right;
+  padding: 0.7rem 1rem;
+}
+
+.tableContainer th:nth-child(1) {
+  text-align: left;
+}
+
+.tableContainer td {
+  text-align: right;
+  padding: 1rem;
+  border-bottom: 0.1rem solid #e3e3e3;
+  cursor: pointer;
+}
+
+.tableContainer tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.tableContainer tbody tr:hover {
+  background-color: #b0e0e6;
+}
+
+.tableContainer td:nth-child(1) {
+  text-align: left;
+}
+
+.tableContainer td:nth-child(2) {
+  text-align: left;
+  font-weight: 400;
+  color: gray;
+}
+
+.tableContainer > thead {
+  background-color: #f0f0f0;
+  color: gray;
+}

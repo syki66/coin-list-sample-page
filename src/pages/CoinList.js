@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { formatNumber } from '../utils/common';
+import { formatNumber, getPercentColor } from '../utils/common';
 import { useNavigate } from 'react-router-dom';
+import styles from './CoinList.module.css';
 
 export default function CoinList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,10 +16,6 @@ export default function CoinList() {
   const handleMoreClick = () => {
     setListNum(listNum + perPage);
   };
-
-  useEffect(() => {
-    console.log(perPage);
-  }, [perPage]);
 
   const getCoinList = async () => {
     try {
@@ -37,6 +34,7 @@ export default function CoinList() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getCoinList();
   }, [currency, listNum]);
 
@@ -46,36 +44,40 @@ export default function CoinList() {
 
   return (
     <>
-      <select>
-        <option>전체보기</option>
-        <option>북마크 보기</option>
-      </select>
-      <select
-        onChange={(e) => {
-          setCurrency(e.target.value);
-        }}
-      >
-        <option selected value={'krw'}>
-          KRW 보기
-        </option>
-        <option value={'usd'}>USD 보기</option>
-      </select>
-      <select
-        onChange={(e) => {
-          setPerPage(parseInt(e.target.value));
-          setListNum(parseInt(e.target.value));
-        }}
-      >
-        <option value={10}>10개 보기</option>
-        <option value={30}>30개 보기</option>
-        <option selected value={50}>
-          50개 보기
-        </option>
-      </select>
-      <table>
+      <div className={styles.selectBox}>
+        <select>
+          <option>전체보기</option>
+          <option>북마크 보기</option>
+        </select>
+        <select
+          onChange={(e) => {
+            setCurrency(e.target.value);
+          }}
+        >
+          <option selected value={'krw'}>
+            KRW 보기
+          </option>
+          <option value={'usd'}>USD 보기</option>
+        </select>
+        <select
+          onChange={(e) => {
+            setPerPage(parseInt(e.target.value));
+            setListNum(parseInt(e.target.value));
+          }}
+        >
+          <option value={10}>10개 보기</option>
+          <option value={30}>30개 보기</option>
+          <option selected value={50}>
+            50개 보기
+          </option>
+        </select>
+      </div>
+
+      <table className={styles.tableContainer}>
         <thead>
           <tr>
             <th>Coin</th>
+            <th></th>
             <th>Price</th>
             <th>1H</th>
             <th>24H</th>
@@ -91,31 +93,45 @@ export default function CoinList() {
                 navigate(`/${coin.id}`);
               }}
             >
-              <td>
-                {coin.name}
-                {'\n'}
-                {coin.symbol}
-              </td>
+              <td>{coin.name}</td>
+              <td>{coin.symbol.toUpperCase()}</td>
               <td>{formatNumber(coin.current_price, currency)}</td>
-              <td>
+              <td
+                style={{
+                  color: getPercentColor(
+                    coin.price_change_percentage_1h_in_currency
+                  ),
+                }}
+              >
                 {formatNumber(coin.price_change_percentage_1h_in_currency, '%')}
               </td>
-              <td>
+              <td
+                style={{
+                  color: getPercentColor(
+                    coin.price_change_percentage_24h_in_currency
+                  ),
+                }}
+              >
                 {formatNumber(
                   coin.price_change_percentage_24h_in_currency,
                   '%'
                 )}
               </td>
-              <td>
+              <td
+                style={{
+                  color: getPercentColor(
+                    coin.price_change_percentage_7d_in_currency
+                  ),
+                }}
+              >
                 {formatNumber(coin.price_change_percentage_7d_in_currency, '%')}
               </td>
               <td>{formatNumber(coin.total_volume, currency)}</td>
             </tr>
           ))}
+          <tr onClick={handleMoreClick}>+ 더보기</tr>
         </tbody>
       </table>
-
-      <div onClick={handleMoreClick}>+ 더보기</div>
     </>
   );
 }
