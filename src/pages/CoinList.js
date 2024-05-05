@@ -81,7 +81,7 @@ export default function CoinList() {
             setCurrency(e.target.value);
           }}
         >
-          <option selected value={'krw'}>
+          <option defaultValue="krw" value={'krw'}>
             KRW 보기
           </option>
           <option value={'usd'}>USD 보기</option>
@@ -94,7 +94,7 @@ export default function CoinList() {
         >
           <option value={10}>10개 보기</option>
           <option value={30}>30개 보기</option>
-          <option selected value={50}>
+          <option defaultValue={50} value={50}>
             50개 보기
           </option>
         </select>
@@ -167,9 +167,11 @@ export default function CoinList() {
               <td>{formatNumber(coin.total_volume, currency)}</td>
             </tr>
           ))}
-          <tr onClick={handleMoreClick}>+ 더보기</tr>
         </tbody>
       </table>
+      <div className={styles.more} onClick={handleMoreClick}>
+        + 더보기
+      </div>
     </>
   );
 }
