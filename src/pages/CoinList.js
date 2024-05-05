@@ -10,11 +10,25 @@ export default function CoinList() {
   const [currency, setCurrency] = useState('krw');
   const [perPage, setPerPage] = useState(50);
   const [listNum, setListNum] = useState(50);
+  const [bookmarkList, setBookmarkList] = useState([]);
 
   const navigate = useNavigate();
 
   const handleMoreClick = () => {
     setListNum(listNum + perPage);
+  };
+
+  const handleBookmarkChange = (event, id) => {
+    event.stopPropagation();
+
+    let updateBookmark = [];
+    if (bookmarkList.includes(id)) {
+      updateBookmark = bookmarkList.filter((item) => item !== id);
+    } else {
+      updateBookmark = [...bookmarkList, id];
+    }
+    setBookmarkList(updateBookmark);
+    localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
 
   const getCoinList = async () => {
@@ -34,9 +48,12 @@ export default function CoinList() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getCoinList();
   }, [currency, listNum]);
+
+  useEffect(() => {
+    setBookmarkList(JSON.parse(localStorage.getItem('bookmark')));
+  }, []);
 
   if (isLoading) {
     return <>로딩 중 ...</>;
@@ -76,7 +93,8 @@ export default function CoinList() {
       <table className={styles.tableContainer}>
         <thead>
           <tr>
-            <th>Coin</th>
+            <th></th>
+            <th>자산</th>
             <th></th>
             <th>Price</th>
             <th>1H</th>
@@ -93,6 +111,10 @@ export default function CoinList() {
                 navigate(`/${coin.id}`);
               }}
             >
+              <td onClick={(event) => handleBookmarkChange(event, coin.id)}>
+                {/* ★ */}
+                {bookmarkList.includes(coin.id) ? 'o' : 'x'}
+              </td>
               <td>{coin.name}</td>
               <td>{coin.symbol.toUpperCase()}</td>
               <td>{formatNumber(coin.current_price, currency)}</td>
