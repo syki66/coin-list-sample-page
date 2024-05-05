@@ -11,6 +11,7 @@ export default function CoinList() {
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [coinList, setCoinList] = useState([]);
+  const [showStatus, setShowStatus] = useState('all');
   const [currency, setCurrency] = useState('krw');
   const [perPage, setPerPage] = useState(50);
   const [listNum, setListNum] = useState(50);
@@ -72,21 +73,26 @@ export default function CoinList() {
     <>
       {toast && <Toast setToast={setToast} message={toastMessage} />}
       <div className={styles.selectBox}>
-        <select>
-          <option>전체보기</option>
-          <option>북마크 보기</option>
+        <select
+          value={showStatus}
+          onChange={(e) => {
+            setShowStatus(e.target.value);
+          }}
+        >
+          <option value={'all'}>전체보기</option>
+          <option value={'bookmark'}>북마크 보기</option>
         </select>
         <select
+          value={currency}
           onChange={(e) => {
             setCurrency(e.target.value);
           }}
         >
-          <option defaultValue="krw" value={'krw'}>
-            KRW 보기
-          </option>
+          <option value={'krw'}>KRW 보기</option>
           <option value={'usd'}>USD 보기</option>
         </select>
         <select
+          value={perPage}
           onChange={(e) => {
             setPerPage(parseInt(e.target.value));
             setListNum(parseInt(e.target.value));
@@ -94,9 +100,7 @@ export default function CoinList() {
         >
           <option value={10}>10개 보기</option>
           <option value={30}>30개 보기</option>
-          <option defaultValue={50} value={50}>
-            50개 보기
-          </option>
+          <option value={50}>50개 보기</option>
         </select>
       </div>
 
@@ -114,59 +118,71 @@ export default function CoinList() {
           </tr>
         </thead>
         <tbody>
-          {coinList.map((coin) => (
-            <tr
-              key={coin.id}
-              onClick={() => {
-                navigate(`/${coin.id}`);
-              }}
-            >
-              <td
-                className={
-                  bookmarkList.includes(coin.id)
-                    ? 'bookmark-active'
-                    : 'bookmark-inactive'
-                }
-                onClick={(event) => handleBookmarkChange(event, coin.id)}
-              >
-                ★
-              </td>
-              <td>{coin.name}</td>
-              <td>{coin.symbol.toUpperCase()}</td>
-              <td>{formatNumber(coin.current_price, currency)}</td>
-              <td
-                style={{
-                  color: getPercentColor(
-                    coin.price_change_percentage_1h_in_currency
-                  ),
+          {coinList.map((coin) => {
+            if (showStatus === 'bookmark' && !bookmarkList.includes(coin.id)) {
+              return null;
+            }
+
+            return (
+              <tr
+                key={coin.id}
+                onClick={() => {
+                  navigate(`/${coin.id}`);
                 }}
               >
-                {formatNumber(coin.price_change_percentage_1h_in_currency, '%')}
-              </td>
-              <td
-                style={{
-                  color: getPercentColor(
-                    coin.price_change_percentage_24h_in_currency
-                  ),
-                }}
-              >
-                {formatNumber(
-                  coin.price_change_percentage_24h_in_currency,
-                  '%'
-                )}
-              </td>
-              <td
-                style={{
-                  color: getPercentColor(
-                    coin.price_change_percentage_7d_in_currency
-                  ),
-                }}
-              >
-                {formatNumber(coin.price_change_percentage_7d_in_currency, '%')}
-              </td>
-              <td>{formatNumber(coin.total_volume, currency)}</td>
-            </tr>
-          ))}
+                <td
+                  className={
+                    bookmarkList.includes(coin.id)
+                      ? 'bookmark-active'
+                      : 'bookmark-inactive'
+                  }
+                  onClick={(event) => handleBookmarkChange(event, coin.id)}
+                >
+                  ★
+                </td>
+                <td>{coin.name}</td>
+                <td>{coin.symbol.toUpperCase()}</td>
+                <td>{formatNumber(coin.current_price, currency)}</td>
+                <td
+                  style={{
+                    color: getPercentColor(
+                      coin.price_change_percentage_1h_in_currency
+                    ),
+                  }}
+                >
+                  {formatNumber(
+                    coin.price_change_percentage_1h_in_currency,
+                    '%'
+                  )}
+                </td>
+                <td
+                  style={{
+                    color: getPercentColor(
+                      coin.price_change_percentage_24h_in_currency
+                    ),
+                  }}
+                >
+                  {formatNumber(
+                    coin.price_change_percentage_24h_in_currency,
+                    '%'
+                  )}
+                </td>
+                <td
+                  style={{
+                    color: getPercentColor(
+                      coin.price_change_percentage_7d_in_currency
+                    ),
+                  }}
+                >
+                  {formatNumber(
+                    coin.price_change_percentage_7d_in_currency,
+                    '%'
+                  )}
+                </td>
+                <td>{formatNumber(coin.total_volume, currency)}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className={styles.more} onClick={handleMoreClick}>

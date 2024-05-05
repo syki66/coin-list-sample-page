@@ -143,6 +143,7 @@ export default function CoinDetails() {
 
         <section className={styles.currency}>
           <select
+            value={currency}
             onChange={(e) => {
               setCurrency(e.target.value);
             }}
