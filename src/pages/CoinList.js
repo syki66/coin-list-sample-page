@@ -1,42 +1,36 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { formatNumber, getPercentColor } from '../utils/common';
-import { useNavigate } from 'react-router-dom';
 import styles from './CoinList.module.css';
-import Toast from '../components/Toast/Toast';
 import Loader from '../components/Loader/Loader';
+import CryptoTable from '../components/CryptoTable/CryptoTable';
 
 export default function CoinList() {
   const [isLoading, setIsLoading] = useState(true);
-  const [toast, setToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+
+  const [headLabel] = useState([
+    '',
+    '자산',
+    '',
+    'Price',
+    '1H',
+    '24H',
+    '7D',
+    'Total Volume',
+  ]);
   const [coinList, setCoinList] = useState([]);
   const [showStatus, setShowStatus] = useState('all');
   const [currency, setCurrency] = useState('krw');
   const [perPage, setPerPage] = useState(50);
   const [listNum, setListNum] = useState(50);
-  const [bookmarkList, setBookmarkList] = useState([]);
 
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   const handleMoreClick = () => {
     setListNum(listNum + perPage);
-  };
-
-  const handleBookmarkChange = (event, id) => {
-    event.stopPropagation();
-
-    let updateBookmark = [];
-    if (bookmarkList.includes(id)) {
-      updateBookmark = bookmarkList.filter((item) => item !== id);
-      setToastMessage('북마크가 해제되었습니다.');
-    } else {
-      updateBookmark = [...bookmarkList, id];
-      setToastMessage('북마크가 등록되었습니다.');
-    }
-    setToast(true);
-    setBookmarkList(updateBookmark);
-    localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
 
   const getCoinList = async () => {
@@ -59,19 +53,33 @@ export default function CoinList() {
     getCoinList();
   }, [currency, listNum]);
 
-  useEffect(() => {
-    if (localStorage.getItem('bookmark')) {
-      setBookmarkList(JSON.parse(localStorage.getItem('bookmark')));
-    }
-  }, []);
-
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      {toast && <Toast setToast={setToast} message={toastMessage} />}
+      <div>
+        <div className="tabs">
+          <button
+            className={activeTab === 0 ? 'active' : ''}
+            onClick={() => handleTabClick(0)}
+          >
+            가상자산 시세 목록
+          </button>
+          <button
+            className={activeTab === 1 ? 'active' : ''}
+            onClick={() => handleTabClick(1)}
+          >
+            북마크 목록
+          </button>
+        </div>
+        <div className="tab-content">
+          {activeTab === 0 && <div>Tab 1 Content</div>}
+          {activeTab === 1 && <div>Tab 2 Content</div>}
+        </div>
+      </div>
+
       <div className={styles.selectBox}>
         <select
           value={showStatus}
@@ -104,87 +112,12 @@ export default function CoinList() {
         </select>
       </div>
 
-      <table className={styles.tableContainer}>
-        <thead>
-          <tr>
-            <th></th>
-            <th>자산</th>
-            <th></th>
-            <th>Price</th>
-            <th>1H</th>
-            <th>24H</th>
-            <th>7D</th>
-            <th>Total Volume</th>
-          </tr>
-        </thead>
-        <tbody>
-          {coinList.map((coin) => {
-            if (showStatus === 'bookmark' && !bookmarkList.includes(coin.id)) {
-              return null;
-            }
-
-            return (
-              <tr
-                key={coin.id}
-                onClick={() => {
-                  navigate(`/${coin.id}`);
-                }}
-              >
-                <td
-                  className={
-                    bookmarkList.includes(coin.id)
-                      ? 'bookmark-active'
-                      : 'bookmark-inactive'
-                  }
-                  onClick={(event) => handleBookmarkChange(event, coin.id)}
-                >
-                  ★
-                </td>
-                <td>{coin.name}</td>
-                <td>{coin.symbol.toUpperCase()}</td>
-                <td>{formatNumber(coin.current_price, currency)}</td>
-                <td
-                  style={{
-                    color: getPercentColor(
-                      coin.price_change_percentage_1h_in_currency
-                    ),
-                  }}
-                >
-                  {formatNumber(
-                    coin.price_change_percentage_1h_in_currency,
-                    '%'
-                  )}
-                </td>
-                <td
-                  style={{
-                    color: getPercentColor(
-                      coin.price_change_percentage_24h_in_currency
-                    ),
-                  }}
-                >
-                  {formatNumber(
-                    coin.price_change_percentage_24h_in_currency,
-                    '%'
-                  )}
-                </td>
-                <td
-                  style={{
-                    color: getPercentColor(
-                      coin.price_change_percentage_7d_in_currency
-                    ),
-                  }}
-                >
-                  {formatNumber(
-                    coin.price_change_percentage_7d_in_currency,
-                    '%'
-                  )}
-                </td>
-                <td>{formatNumber(coin.total_volume, currency)}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <CryptoTable
+        headLabel={headLabel}
+        coinList={coinList}
+        currency={currency}
+        showStatus={showStatus}
+      />
       <div className={styles.more} onClick={handleMoreClick}>
         + 더보기
       </div>
