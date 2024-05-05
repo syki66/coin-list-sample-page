@@ -14,6 +14,7 @@ export default function CoinDetails() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [coin, setCoin] = useState({});
+  const [bookmarkList, setBookmarkList] = useState([]);
   const [currency, setCurrency] = useState('krw');
   const [description, setDescription] = useState('');
   const [descOpen, setDescOpen] = useState(false);
@@ -24,6 +25,19 @@ export default function CoinDetails() {
 
   const toggleDescOpen = () => {
     setDescOpen(!descOpen);
+  };
+
+  const handleBookmarkChange = (event, id) => {
+    event.stopPropagation();
+
+    let updateBookmark = [];
+    if (bookmarkList.includes(id)) {
+      updateBookmark = bookmarkList.filter((item) => item !== id);
+    } else {
+      updateBookmark = [...bookmarkList, id];
+    }
+    setBookmarkList(updateBookmark);
+    localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
 
   const handleInputChange = (e) => {
@@ -73,6 +87,10 @@ export default function CoinDetails() {
 
   useEffect(() => {
     getCoinDetail(params.id);
+
+    if (localStorage.getItem('bookmark')) {
+      setBookmarkList(JSON.parse(localStorage.getItem('bookmark')));
+    }
   }, []);
 
   useEffect(() => {
@@ -97,7 +115,18 @@ export default function CoinDetails() {
     <>
       <div className={styles.container}>
         <section className={styles.title}>
-          <span className={styles.bookmarkInactive}>★</span>
+          <span
+            className={
+              bookmarkList.includes(coin.id)
+                ? 'bookmark-active'
+                : 'bookmark-inactive'
+            }
+            onClick={(event) => {
+              handleBookmarkChange(event, coin.id);
+            }}
+          >
+            ★
+          </span>
           <img src={coin.image.small} />
           <h1>
             {coin.localization.ko} ({coin.symbol.toUpperCase()})

@@ -52,7 +52,9 @@ export default function CoinList() {
   }, [currency, listNum]);
 
   useEffect(() => {
-    setBookmarkList(JSON.parse(localStorage.getItem('bookmark')));
+    if (localStorage.getItem('bookmark')) {
+      setBookmarkList(JSON.parse(localStorage.getItem('bookmark')));
+    }
   }, []);
 
   if (isLoading) {
@@ -111,9 +113,15 @@ export default function CoinList() {
                 navigate(`/${coin.id}`);
               }}
             >
-              <td onClick={(event) => handleBookmarkChange(event, coin.id)}>
-                {/* ★ */}
-                {bookmarkList.includes(coin.id) ? 'o' : 'x'}
+              <td
+                className={
+                  bookmarkList.includes(coin.id)
+                    ? 'bookmark-active'
+                    : 'bookmark-inactive'
+                }
+                onClick={(event) => handleBookmarkChange(event, coin.id)}
+              >
+                ★
               </td>
               <td>{coin.name}</td>
               <td>{coin.symbol.toUpperCase()}</td>

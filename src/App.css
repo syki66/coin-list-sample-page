@@ -1,0 +1,11 @@
+/* global css */
+
+.bookmark-active {
+  color: #ecb63f;
+  cursor: pointer;
+}
+
+.bookmark-inactive {
+  color: #c4c4c4;
+  cursor: pointer;
+}

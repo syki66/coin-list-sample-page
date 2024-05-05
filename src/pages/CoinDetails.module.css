@@ -16,16 +16,6 @@
   align-items: center;
 }
 
-.bookmarkActive {
-  color: #ecb63f;
-  cursor: pointer;
-}
-
-.bookmarkInactive {
-  color: #c4c4c4;
-  cursor: pointer;
-}
-
 .title > img {
   height: 2rem;
   padding: 0rem 0.4rem;
