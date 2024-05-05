@@ -2,7 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './CoinDetails.module.css';
-import { formatNumber, getPercentColor } from '../utils/common';
+import {
+  formatNumber,
+  getPercentColor,
+  addCommas,
+  removeCommas,
+} from '../utils/common';
 
 export default function CoinDetails() {
   const params = useParams();
@@ -12,9 +17,42 @@ export default function CoinDetails() {
   const [currency, setCurrency] = useState('krw');
   const [description, setDescription] = useState('');
   const [descOpen, setDescOpen] = useState(false);
+  const [inputs, setInputs] = useState({
+    coin: '',
+    currency: '',
+  });
 
   const toggleDescOpen = () => {
     setDescOpen(!descOpen);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const price = coin.market_data.current_price[currency];
+
+    const numValue = removeCommas(value);
+
+    const coinRegex = /^(?!0\d)\d{0,13}(?:\.\d{0,8})?$/g;
+    const currencyRegex = /^(?!0\d)\d{0,13}(?:\.\d{0,2})?$/g;
+    if (name === 'coin' && !coinRegex.test(numValue)) {
+      return false;
+    }
+    if (name === 'currency' && !currencyRegex.test(numValue)) {
+      return false;
+    }
+
+    if (name === 'coin') {
+      const newCurrencyValue = Number.isInteger(numValue * price)
+        ? (numValue * price).toString()
+        : (numValue * price).toFixed(2);
+      setInputs({ coin: numValue, currency: newCurrencyValue });
+    }
+    if (name === 'currency') {
+      const newCoinValue = Number.isInteger(numValue * price)
+        ? (numValue * price).toString()
+        : (numValue * price).toFixed(8);
+      setInputs({ currency: numValue, coin: newCoinValue });
+    }
   };
 
   const getCoinDetail = async (id) => {
@@ -149,14 +187,24 @@ export default function CoinDetails() {
             <div>
               <label htmlFor="coinInput">{coin.symbol.toUpperCase()}</label>
               <span>
-                <input type="text" id="coinInput" />
+                <input
+                  name="coin"
+                  onChange={handleInputChange}
+                  value={addCommas(inputs.coin)}
+                  id="coinInput"
+                />
               </span>
             </div>
             <div>↔</div>
             <div>
               <label htmlFor="textInput">{currency.toUpperCase()}</label>
               <span>
-                <input type="text" id="textInput" />
+                <input
+                  name="currency"
+                  onChange={handleInputChange}
+                  value={addCommas(inputs.currency)}
+                  id="textInput"
+                />
               </span>
             </div>
           </div>
@@ -164,7 +212,7 @@ export default function CoinDetails() {
 
         {description && (
           <section className={styles.description}>
-            <div onClick={toggleDescOpen}>설명보기 ▼</div>
+            <div onClick={toggleDescOpen}>설명보기 {descOpen ? '▲' : '▼'}</div>
             {descOpen && (
               <p dangerouslySetInnerHTML={{ __html: description }} />
             )}

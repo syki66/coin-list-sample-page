@@ -1,4 +1,4 @@
-export const addCommasAndDecimal = (number) => {
+const addCommasAndDecimal = (number) => {
   const numStr = number.toString();
   const regex = /\B(?=(\d{3})+(?!\d))/g;
 
@@ -13,7 +13,7 @@ export const addCommasAndDecimal = (number) => {
   }
 };
 
-export const formatNumber = (number, currency) => {
+const formatNumber = (number, currency) => {
   const currencyObject = {
     krw: '₩',
     usd: '$',
@@ -28,7 +28,7 @@ export const formatNumber = (number, currency) => {
   }
 };
 
-export const getPercentColor = (number) => {
+const getPercentColor = (number) => {
   const _number = addCommasAndDecimal(number).replace(/[%\,]/g, '');
 
   if (_number > 0) {
@@ -38,4 +38,24 @@ export const getPercentColor = (number) => {
   } else {
     return 'black';
   }
+};
+
+const addCommas = (number) => {
+  const numStr = number.toString();
+  const parts = numStr.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return parts.join('.');
+};
+
+const removeCommas = (str) => {
+  return str.replace(/,/g, '');
+};
+
+export {
+  addCommasAndDecimal,
+  formatNumber,
+  getPercentColor,
+  addCommas,
+  removeCommas,
 };
