@@ -3,9 +3,12 @@ import axios from 'axios';
 import { formatNumber, getPercentColor } from '../utils/common';
 import { useNavigate } from 'react-router-dom';
 import styles from './CoinList.module.css';
+import Toast from '../components/Toast/Toast';
 
 export default function CoinList() {
   const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [coinList, setCoinList] = useState([]);
   const [currency, setCurrency] = useState('krw');
   const [perPage, setPerPage] = useState(50);
@@ -24,9 +27,12 @@ export default function CoinList() {
     let updateBookmark = [];
     if (bookmarkList.includes(id)) {
       updateBookmark = bookmarkList.filter((item) => item !== id);
+      setToastMessage('북마크가 해제되었습니다.');
     } else {
       updateBookmark = [...bookmarkList, id];
+      setToastMessage('북마크가 등록되었습니다.');
     }
+    setToast(true);
     setBookmarkList(updateBookmark);
     localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
@@ -63,6 +69,7 @@ export default function CoinList() {
 
   return (
     <>
+      {toast && <Toast setToast={setToast} message={toastMessage} />}
       <div className={styles.selectBox}>
         <select>
           <option>전체보기</option>

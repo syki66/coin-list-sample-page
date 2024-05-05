@@ -8,11 +8,14 @@ import {
   addCommas,
   removeCommas,
 } from '../utils/common';
+import Toast from '../components/Toast/Toast';
 
 export default function CoinDetails() {
   const params = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [coin, setCoin] = useState({});
   const [bookmarkList, setBookmarkList] = useState([]);
   const [currency, setCurrency] = useState('krw');
@@ -33,9 +36,12 @@ export default function CoinDetails() {
     let updateBookmark = [];
     if (bookmarkList.includes(id)) {
       updateBookmark = bookmarkList.filter((item) => item !== id);
+      setToastMessage('북마크가 해제되었습니다.');
     } else {
       updateBookmark = [...bookmarkList, id];
+      setToastMessage('북마크가 등록되었습니다.');
     }
+    setToast(true);
     setBookmarkList(updateBookmark);
     localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
@@ -113,6 +119,7 @@ export default function CoinDetails() {
 
   return (
     <>
+      {toast && <Toast setToast={setToast} message={toastMessage} />}
       <div className={styles.container}>
         <section className={styles.title}>
           <span
