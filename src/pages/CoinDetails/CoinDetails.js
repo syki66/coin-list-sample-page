@@ -56,10 +56,18 @@ export default function CoinDetails() {
 
     const coinRegex = /^(?!0\d)\d{0,13}(?:\.\d{0,8})?$/g;
     const currencyRegex = /^(?!0\d)\d{0,13}(?:\.\d{0,2})?$/g;
-    if (name === 'coin' && !coinRegex.test(numValue)) {
+
+    if (
+      name === 'coin' &&
+      !(coinRegex.test(numValue) && numValue * price < 10 ** 13)
+    ) {
       return false;
     }
-    if (name === 'currency' && !currencyRegex.test(numValue)) {
+
+    if (
+      name === 'currency' &&
+      !(currencyRegex.test(numValue) && numValue / price < 10 ** 13)
+    ) {
       return false;
     }
 
@@ -70,9 +78,9 @@ export default function CoinDetails() {
       setInputs({ coin: numValue, currency: newCurrencyValue });
     }
     if (name === 'currency') {
-      const newCoinValue = Number.isInteger(numValue * price)
-        ? (numValue * price).toString()
-        : (numValue * price).toFixed(8);
+      const newCoinValue = Number.isInteger(numValue / price)
+        ? (numValue / price).toString()
+        : (numValue / price).toFixed(8);
       setInputs({ currency: numValue, coin: newCoinValue });
     }
   };
