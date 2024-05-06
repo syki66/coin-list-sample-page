@@ -11,6 +11,7 @@ export default function BookmarkCoinList() {
   const [isLoading, setIsLoading] = useState(true);
   const [headLabel] = useState([
     '',
+    '',
     '자산',
     '',
     'Price',

@@ -6,6 +6,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-size: 1rem;
 }
 
 .tableContainer th {
@@ -13,7 +14,7 @@
   padding: 0.7rem 1rem;
 }
 
-.tableContainer th:nth-child(2) {
+.tableContainer th:nth-child(3) {
   text-align: left;
 }
 
@@ -21,6 +22,9 @@
   text-align: right;
   padding: 1rem;
   border-bottom: 0.1rem solid #e3e3e3;
+}
+
+.tableContainer tbody {
   cursor: pointer;
 }
 
@@ -33,10 +37,21 @@
 }
 
 .tableContainer td:nth-child(2) {
-  text-align: left;
+  position: relative;
 }
 
 .tableContainer td:nth-child(3) {
+  text-align: left;
+}
+
+.tableContainer img {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.7rem;
+  height: 2rem;
+}
+
+.tableContainer td:nth-child(4) {
   text-align: left;
   font-weight: 400;
   color: gray;

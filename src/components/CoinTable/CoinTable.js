@@ -73,6 +73,9 @@ export default function CoinTable({
                 >
                   ★
                 </td>
+                <td>
+                  <img src={coin.image} />
+                </td>
                 <td>{coin.name}</td>
                 <td>{coin.symbol.toUpperCase()}</td>
                 <td>{formatNumber(coin.current_price, currency)}</td>

@@ -12,6 +12,7 @@ export default function AllCoinList() {
   const [isLoading, setIsLoading] = useState(true);
   const [headLabel] = useState([
     '',
+    '',
     '자산',
     '',
     'Price',
