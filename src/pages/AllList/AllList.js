@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import CoinTable from '../../components/CoinTable/CoinTable';
+import Loader from '../../components/Loader/Loader';
+import styles from './AllList.module.css';
 import axios from 'axios';
-import styles from './CoinList.module.css';
-import Loader from '../components/Loader/Loader';
-import CryptoTable from '../components/CryptoTable/CryptoTable';
+import Tab from '../../components/Tab/Tab';
 
-export default function CoinList() {
+export default function AllList() {
+  const [currency, setCurrency] = useState('krw');
   const [isLoading, setIsLoading] = useState(true);
-
   const [headLabel] = useState([
     '',
     '자산',
@@ -17,17 +18,10 @@ export default function CoinList() {
     '7D',
     'Total Volume',
   ]);
-  const [coinList, setCoinList] = useState([]);
+  const [coinData, setCoinData] = useState([]);
   const [showStatus, setShowStatus] = useState('all');
-  const [currency, setCurrency] = useState('krw');
   const [perPage, setPerPage] = useState(50);
   const [listNum, setListNum] = useState(50);
-
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
 
   const handleMoreClick = () => {
     setListNum(listNum + perPage);
@@ -37,7 +31,7 @@ export default function CoinList() {
     try {
       const url = `${process.env.REACT_APP_BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${listNum}&page=1&price_change_percentage=1h,24h,7d`;
       const response = await axios.get(url);
-      setCoinList(response.data);
+      setCoinData(response.data);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -59,27 +53,7 @@ export default function CoinList() {
 
   return (
     <>
-      <div>
-        <div className="tabs">
-          <button
-            className={activeTab === 0 ? 'active' : ''}
-            onClick={() => handleTabClick(0)}
-          >
-            가상자산 시세 목록
-          </button>
-          <button
-            className={activeTab === 1 ? 'active' : ''}
-            onClick={() => handleTabClick(1)}
-          >
-            북마크 목록
-          </button>
-        </div>
-        <div className="tab-content">
-          {activeTab === 0 && <div>Tab 1 Content</div>}
-          {activeTab === 1 && <div>Tab 2 Content</div>}
-        </div>
-      </div>
-
+      <Tab />
       <div className={styles.selectBox}>
         <select
           value={showStatus}
@@ -112,9 +86,9 @@ export default function CoinList() {
         </select>
       </div>
 
-      <CryptoTable
+      <CoinTable
         headLabel={headLabel}
-        coinList={coinList}
+        coinData={coinData}
         currency={currency}
         showStatus={showStatus}
       />

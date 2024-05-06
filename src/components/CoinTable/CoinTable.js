@@ -1,12 +1,12 @@
-import styles from './CryptoTable.module.css';
+import styles from './CoinTable.module.css';
 import { formatNumber, getPercentColor } from '../../utils/common';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Toast from '../Toast/Toast';
 
-export default function CryptoTable({
+export default function CoinTable({
   headLabel,
-  coinList,
+  coinData,
   currency,
   showStatus,
 }) {
@@ -51,7 +51,7 @@ export default function CryptoTable({
           </tr>
         </thead>
         <tbody>
-          {coinList.map((coin) => {
+          {coinData.map((coin) => {
             if (showStatus === 'bookmark' && !bookmarkList.includes(coin.id)) {
               return null;
             }
