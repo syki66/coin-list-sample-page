@@ -77,6 +77,7 @@ export default function AllCoinList() {
           value={currency}
           onChange={(e) => {
             setCurrency(e.target.value);
+            localStorage.setItem('currency', e.target.value);
           }}
         >
           <option value={'krw'}>KRW 보기</option>

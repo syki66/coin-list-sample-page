@@ -7,7 +7,7 @@ import Toast from '../../components/Toast/Toast';
 import { networkErrorMessage } from '../../constants/errorMessage';
 
 export default function BookmarkCoinList() {
-  const [currency] = useState('krw');
+  const [currency] = useState(localStorage.getItem('currency') || 'krw');
   const [isLoading, setIsLoading] = useState(true);
   const [headLabel] = useState([
     '',
