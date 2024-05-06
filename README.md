@@ -59,8 +59,6 @@ root
         └── CoinDetails             # 암호화폐 상세 페이지
 ```
 
-## 기능 구현
-
 ## 참고자료
 
 - https://www.coingecko.com/api/documentations/v3#/
