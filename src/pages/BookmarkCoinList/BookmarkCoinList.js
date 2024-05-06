@@ -3,6 +3,8 @@ import CoinTable from '../../components/CoinTable/CoinTable';
 import Loader from '../../components/Loader/Loader';
 import axios from 'axios';
 import GNB from '../../components/GNB/GNB';
+import Toast from '../../components/Toast/Toast';
+import { networkErrorMessage } from '../constants/errorMessage';
 
 export default function BookmarkCoinList() {
   const [currency] = useState('krw');
@@ -18,6 +20,8 @@ export default function BookmarkCoinList() {
     'Total Volume',
   ]);
   const [coinData, setCoinData] = useState([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const getCoinList = async () => {
     try {
@@ -28,9 +32,8 @@ export default function BookmarkCoinList() {
     } catch (error) {
       console.log(error);
       if (error.code === 'ERR_NETWORK') {
-        alert(
-          '네트워크 오류가 발생했습니다. \n\n API를 빈번하게 호출할 경우 오류가 발생할 수 있습니다. \n 잠시 후 다시 이용해주세요.'
-        );
+        setShowToast(true);
+        setToastMessage(networkErrorMessage);
       }
     }
   };
@@ -40,11 +43,16 @@ export default function BookmarkCoinList() {
   }, []);
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <>
+        {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
+        <Loader />
+      </>
+    );
   }
-
   return (
     <>
+      {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
       <GNB />
       <CoinTable
         headLabel={headLabel}

@@ -4,6 +4,8 @@ import Loader from '../../components/Loader/Loader';
 import styles from './AllCoinList.module.css';
 import axios from 'axios';
 import GNB from '../../components/GNB/GNB';
+import Toast from '../../components/Toast/Toast';
+import { networkErrorMessage } from '../constants/errorMessage';
 
 export default function AllCoinList() {
   const [currency, setCurrency] = useState('krw');
@@ -22,6 +24,8 @@ export default function AllCoinList() {
   const [showStatus, setShowStatus] = useState('all');
   const [perPage, setPerPage] = useState(50);
   const [listNum, setListNum] = useState(50);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const handleMoreClick = () => {
     setListNum(listNum + perPage);
@@ -36,9 +40,8 @@ export default function AllCoinList() {
     } catch (error) {
       console.log(error);
       if (error.code === 'ERR_NETWORK') {
-        alert(
-          '네트워크 오류가 발생했습니다. \n\n API를 빈번하게 호출할 경우 오류가 발생할 수 있습니다. \n 잠시 후 다시 이용해주세요.'
-        );
+        setShowToast(true);
+        setToastMessage(networkErrorMessage);
       }
     }
   };
@@ -48,11 +51,17 @@ export default function AllCoinList() {
   }, [currency, listNum]);
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <>
+        {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
+        <Loader />
+      </>
+    );
   }
 
   return (
     <>
+      {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
       <GNB />
       <div className={styles.selectBox}>
         <select
