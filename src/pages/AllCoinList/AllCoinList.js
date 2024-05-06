@@ -5,7 +5,7 @@ import styles from './AllCoinList.module.css';
 import axios from 'axios';
 import GNB from '../../components/GNB/GNB';
 import Toast from '../../components/Toast/Toast';
-import { networkErrorMessage } from '../constants/errorMessage';
+import { networkErrorMessage } from '../../constants/errorMessage';
 
 export default function AllCoinList() {
   const [currency, setCurrency] = useState('krw');

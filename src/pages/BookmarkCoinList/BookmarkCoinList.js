@@ -4,7 +4,7 @@ import Loader from '../../components/Loader/Loader';
 import axios from 'axios';
 import GNB from '../../components/GNB/GNB';
 import Toast from '../../components/Toast/Toast';
-import { networkErrorMessage } from '../constants/errorMessage';
+import { networkErrorMessage } from '../../constants/errorMessage';
 
 export default function BookmarkCoinList() {
   const [currency] = useState('krw');
