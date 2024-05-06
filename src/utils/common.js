@@ -32,9 +32,9 @@ const getPercentColor = (number) => {
   const _number = addCommasAndDecimal(number).replace(/[%\,]/g, '');
 
   if (_number > 0) {
-    return 'red';
+    return '#E45A5A';
   } else if (_number < 0) {
-    return 'blue';
+    return '#3C75DF';
   } else {
     return 'black';
   }
