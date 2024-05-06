@@ -63,8 +63,9 @@ export default function AllCoinList() {
     <>
       {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
       <GNB activeIndex={0} />
-      <div className={styles.selectBox}>
+      <div className={styles.selectContainer}>
         <select
+          className="selectBox"
           value={showStatus}
           onChange={(e) => {
             setShowStatus(e.target.value);
@@ -74,6 +75,7 @@ export default function AllCoinList() {
           <option value={'bookmark'}>북마크 보기</option>
         </select>
         <select
+          className="selectBox"
           value={currency}
           onChange={(e) => {
             setCurrency(e.target.value);
@@ -84,6 +86,7 @@ export default function AllCoinList() {
           <option value={'usd'}>USD 보기</option>
         </select>
         <select
+          className="selectBox"
           value={perPage}
           onChange={(e) => {
             setPerPage(parseInt(e.target.value));

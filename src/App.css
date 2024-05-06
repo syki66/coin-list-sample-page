@@ -9,3 +9,8 @@
   color: #c4c4c4;
   cursor: pointer;
 }
+
+.selectBox {
+  padding: 0.4rem;
+  margin: 1rem 0rem 1rem 1rem;
+}
