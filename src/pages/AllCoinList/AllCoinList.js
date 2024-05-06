@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import CoinTable from '../../components/CoinTable/CoinTable';
 import Loader from '../../components/Loader/Loader';
-import styles from './AllList.module.css';
+import styles from './AllCoinList.module.css';
 import axios from 'axios';
 import Tab from '../../components/Tab/Tab';
 
-export default function AllList() {
+export default function AllCoinList() {
   const [currency, setCurrency] = useState('krw');
   const [isLoading, setIsLoading] = useState(true);
   const [headLabel] = useState([

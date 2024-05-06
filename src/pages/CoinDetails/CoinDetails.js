@@ -7,9 +7,9 @@ import {
   getPercentColor,
   addCommas,
   removeCommas,
-} from '../utils/common';
-import Toast from '../components/Toast/Toast';
-import Loader from '../components/Loader/Loader';
+} from '../../utils/common';
+import Toast from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
 
 export default function CoinDetails() {
   const params = useParams();

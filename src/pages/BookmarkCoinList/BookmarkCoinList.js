@@ -4,7 +4,7 @@ import Loader from '../../components/Loader/Loader';
 import axios from 'axios';
 import Tab from '../../components/Tab/Tab';
 
-export default function BookmarkList() {
+export default function BookmarkCoinList() {
   const [currency] = useState('krw');
   const [isLoading, setIsLoading] = useState(true);
   const [headLabel] = useState([

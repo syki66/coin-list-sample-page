@@ -1,16 +1,16 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import BookmarkList from './pages/BookmarkList/BookmarkList';
-import CoinDetails from './pages/CoinDetails';
-import AllList from './pages/AllList/AllList';
+import BookmarkCoinList from './pages/BookmarkCoinList/BookmarkCoinList';
+import CoinDetails from './pages/CoinDetails/CoinDetails';
+import AllCoinList from './pages/AllCoinList/AllCoinList';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AllList />} />
-          <Route path="/bookmark" element={<BookmarkList />} />
+          <Route path="/" element={<AllCoinList />} />
+          <Route path="/bookmark" element={<BookmarkCoinList />} />
           <Route path="/:id" element={<CoinDetails />} />
         </Routes>
       </BrowserRouter>
