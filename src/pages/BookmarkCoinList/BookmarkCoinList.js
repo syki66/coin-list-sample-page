@@ -53,7 +53,7 @@ export default function BookmarkCoinList() {
   return (
     <>
       {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
-      <GNB />
+      <GNB activeIndex={1} />
       <CoinTable
         headLabel={headLabel}
         coinData={coinData}

@@ -62,7 +62,7 @@ export default function AllCoinList() {
   return (
     <>
       {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
-      <GNB />
+      <GNB activeIndex={0} />
       <div className={styles.selectBox}>
         <select
           value={showStatus}

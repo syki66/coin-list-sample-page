@@ -1,0 +1,30 @@
+.container {
+  background-color: #f4f4f4;
+  margin-bottom: 2rem;
+  display: flex;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.container div {
+  flex: 1;
+  text-align: center;
+}
+
+.item {
+  text-decoration: none;
+  color: #666666;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  padding: 1rem;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+  justify-content: center;
+}
+
+.active {
+  background-color: #ffffff;
+  color: black;
+  box-shadow: 0px 0.3rem 1rem rgba(0, 0, 0, 0.2);
+}
