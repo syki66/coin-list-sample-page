@@ -3,7 +3,7 @@ import CoinTable from '../../components/CoinTable/CoinTable';
 import Loader from '../../components/Loader/Loader';
 import styles from './AllCoinList.module.css';
 import axios from 'axios';
-import Tab from '../../components/Tab/Tab';
+import GNB from '../../components/GNB/GNB';
 
 export default function AllCoinList() {
   const [currency, setCurrency] = useState('krw');
@@ -53,7 +53,7 @@ export default function AllCoinList() {
 
   return (
     <>
-      <Tab />
+      <GNB />
       <div className={styles.selectBox}>
         <select
           value={showStatus}

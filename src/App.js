@@ -1,8 +1,8 @@
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AllCoinList from './pages/AllCoinList/AllCoinList';
 import BookmarkCoinList from './pages/BookmarkCoinList/BookmarkCoinList';
 import CoinDetails from './pages/CoinDetails/CoinDetails';
-import AllCoinList from './pages/AllCoinList/AllCoinList';
+import './App.css';
 
 function App() {
   return (

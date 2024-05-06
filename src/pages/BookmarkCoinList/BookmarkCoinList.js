@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CoinTable from '../../components/CoinTable/CoinTable';
 import Loader from '../../components/Loader/Loader';
 import axios from 'axios';
-import Tab from '../../components/Tab/Tab';
+import GNB from '../../components/GNB/GNB';
 
 export default function BookmarkCoinList() {
   const [currency] = useState('krw');
@@ -45,7 +45,7 @@ export default function BookmarkCoinList() {
 
   return (
     <>
-      <Tab />
+      <GNB />
       <CoinTable
         headLabel={headLabel}
         coinData={coinData}
