@@ -26,7 +26,7 @@ export default function BookmarkCoinList() {
 
   const getCoinList = async () => {
     try {
-      const url = `${process.env.REACT_APP_BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&price_change_percentage=1h,24h,7d`;
+      const url = `${process.env.REACT_APP_BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=250&price_change_percentage=1h,24h,7d`;
       const response = await axios.get(url);
       setCoinData(response.data);
       setIsLoading(false);

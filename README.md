@@ -1,13 +1,27 @@
 # coin-list-sample-page
 
-## 프로젝트 구조
+암호화폐 리스트 샘플 페이지
 
-### 실행 방법
+![]()
 
-```
+## 사용된 기술
+
+- React
+
+## 실행 방법
+
+```bash
 npm install
 ```
 
+```bash
+npm run start
 ```
-npm start
-```
+
+## 디렉토리 구조
+
+## 기능
+
+## 참고자료
+
+- https://www.coingecko.com/api/documentations/v3#/
