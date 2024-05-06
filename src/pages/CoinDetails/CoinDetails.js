@@ -10,12 +10,13 @@ import {
 } from '../../utils/common';
 import Toast from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import { networkErrorMessage } from '../../constants/errorMessage';
 
 export default function CoinDetails() {
   const params = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [toast, setToast] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [coin, setCoin] = useState({});
   const [bookmarkList, setBookmarkList] = useState([]);
@@ -42,7 +43,7 @@ export default function CoinDetails() {
       updateBookmark = [...bookmarkList, id];
       setToastMessage('북마크가 등록되었습니다.');
     }
-    setToast(true);
+    setShowToast(true);
     setBookmarkList(updateBookmark);
     localStorage.setItem('bookmark', JSON.stringify(updateBookmark));
   };
@@ -85,9 +86,8 @@ export default function CoinDetails() {
     } catch (error) {
       console.log(error);
       if (error.code === 'ERR_NETWORK') {
-        alert(
-          '네트워크 오류가 발생했습니다. \n\n API를 빈번하게 호출할 경우 오류가 발생할 수 있습니다. \n 잠시 후 다시 이용해주세요.'
-        );
+        setShowToast(true);
+        setToastMessage(networkErrorMessage);
       }
     }
   };
@@ -109,18 +109,38 @@ export default function CoinDetails() {
       if (coin.description.ko) {
         _description = coin.description.ko;
       }
-
       setDescription(_description.replace(/\r\n/g, '<br>'));
+    }
+
+    if (coin.market_data) {
+      setInputs({
+        coin: 1,
+        currency: coin.market_data.current_price[currency],
+      });
     }
   }, [coin]);
 
+  useEffect(() => {
+    if (coin.market_data) {
+      setInputs({
+        coin: 1,
+        currency: coin.market_data.current_price[currency],
+      });
+    }
+  }, [currency]);
+
   if (isLoading) {
-    return <Loader />;
+    return (
+      <>
+        {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
+        <Loader />
+      </>
+    );
   }
 
   return (
     <>
-      {toast && <Toast setToast={setToast} message={toastMessage} />}
+      {showToast && <Toast setToast={setShowToast} message={toastMessage} />}
       <div className={styles.container}>
         <section className={styles.title}>
           <span
