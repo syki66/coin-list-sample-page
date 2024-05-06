@@ -2,7 +2,9 @@
 
 암호화폐 리스트 샘플 페이지 _(현재 coingecko api를 자주 호출하면 api 호출에 제한이 걸려 오류가 발생합니다.)_
 
-![main page](https://github.com/syki66/coin-list-sample-page/assets/59393359/39b2a41f-0e5c-4986-ad0c-4608259b4172)
+| 메인페이지 | 상세페이지 |
+| :---: | :---: |
+| ![pc](https://github.com/syki66/coin-list-sample-page/assets/59393359/e00a3081-43b6-4d98-887e-1eee186f1fdb) | ![mobile](https://github.com/syki66/coin-list-sample-page/assets/59393359/6d1e5bb5-bf51-4171-ac8d-6b3d694b9ef5) |
 
 ## 사용된 기술
 
