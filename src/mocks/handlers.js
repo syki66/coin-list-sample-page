@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import krwData from './krw.json';
 import usdData from './usd.json';
+import coinData from './coinData.json';
 
 export const handlers = [
   http.get('https://api.coingecko.com/api/v3/coins/markets', ({ request }) => {
@@ -13,5 +14,10 @@ export const handlers = [
     } else {
       return HttpResponse.json(usdData.slice(0, perPage));
     }
+  }),
+
+  http.get('https://api.coingecko.com/api/v3/coins/:slug', ({ params }) => {
+    const { slug } = params;
+    return HttpResponse.json(coinData[slug]);
   }),
 ];

@@ -47,7 +47,7 @@ root
 ├── App.css                     # 공통 css
 ├── .env                        # BASE_URL 관리
 └── src
-    ├── mocks                   # msw
+    ├── mocks                   # msw 파일 관리
     ├── components              # 공통 컴포넌트
     │   ├── CoinTable               # 테이블
     │   ├── GNB                     # 네비게이션 바
