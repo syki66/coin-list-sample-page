@@ -1,6 +1,6 @@
 # coin-list-sample-page
 
-암호화폐 리스트 샘플 페이지 [(Live Demo)](https://coin-list-sample-page.netlify.app)
+암호화폐 리스트 샘플 페이지 **[(Live Demo)](https://coin-list-sample-page.netlify.app)**
 
 _(coingecko api를 자주 호출하면 api 호출에 제한이 걸려 오류가 발생해서, msw를 이용하여 mock 데이터로 처리함)_
 
