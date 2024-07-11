@@ -16,8 +16,8 @@ export const handlers = [
     }
   }),
 
-  http.get('https://api.coingecko.com/api/v3/coins/:slug', ({ params }) => {
-    const { slug } = params;
-    return HttpResponse.json(coinData[slug]);
+  http.get('https://api.coingecko.com/api/v3/coins/:id', ({ params }) => {
+    const { id } = params;
+    return HttpResponse.json(coinData[id]);
   }),
 ];
